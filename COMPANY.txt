@@ -1,0 +1,472 @@
+-=============================================
+-Name: Jessica Jackson    HomeWork3   Due Date: Feb 19, 2024
+-=============================================
+
+SQL> set linesize 150;
+SQL> set pagesize 120;
+SQL> --Q1A
+SQL> --Display employee information for employees in the research department
+SQL> SELECT Fname, EMPLOYEE.Name, Address
+  2  FROM EMPLOYEE, DEPARTMENT
+  3  WHERE DEPARTMENT.Name = 'Research' AND
+  4  DEPARTMENT.Dnumber = EMPLOYEE.Dnumber;
+DEPARTMENT.Dnumber = EMPLOYEE.Dnumber
+                     *
+ERROR at line 4:
+ORA-00904: "EMPLOYEE"."DNUMBER": invalid identifier 
+
+--Query from textbook failed 
+
+SQL> --Q1'
+SQL> --Display employee information for employees in the research department
+SQL> SELECT EMPLOYEE.Fname, EMPLOYEE.LName,
+  2  EMPLOYEE.Address
+  3  FROM EMPLOYEE, DEPARTMENT
+  4  WHERE DEPARTMENT.DName = 'Research' AND
+  5  DEPARTMENT.Dnumber = EMPLOYEE.Dno;
+
+FNAME           LNAME           ADDRESS                                                                                                               
+--------------- --------------- ------------------------------                                                                                        
+John            Smith           731 Fondren, Houston, TX                                                                                              
+Franklin        Wong            638 Voss, Houston, TX                                                                                                 
+Ramesh          Narayan         975 Fire Oak, Humble, TX                                                                                              
+Joyce           English         5631 Rice, Houston, TX                                                                                                
+
+SQL> --Q8
+SQL> --Retrieve the employee's first and last name and the first and last name of the supervisor
+SQL> SELECT E.Fname, E.Lname, S.Fname, S.Lname
+  2  FROM EMPLOYEE E, EMPLOYEE S
+  3  WHERE E.Super_ssn = S.Ssn;
+
+FNAME           LNAME           FNAME           LNAME                                                                                                 
+--------------- --------------- --------------- ---------------                                                                                       
+John            Smith           Franklin        Wong                                                                                                  
+Ramesh          Narayan         Franklin        Wong                                                                                                  
+Joyce           English         Franklin        Wong                                                                                                  
+Alicia          Zelaya          Jennifer        Wallace                                                                                               
+Ahmad           Jabbar          Jennifer        Wallace                                                                                               
+Franklin        Wong            James           Borg                                                                                                  
+Jennifer        Wallace         James           Borg                                                                                                  
+
+7 rows selected.
+
+SQL> --Q1B
+SQL> --Display employee information using renaming mechanism
+SQL> SELECT E.Fname, E.LName, E.Address
+  2  FROM EMPLOYEE E, DEPARTMENT D
+  3  WHERE D.DName = 'Research' AND D.Dnumber = E.Dno;
+
+FNAME           LNAME           ADDRESS                                                                                                               
+--------------- --------------- ------------------------------                                                                                        
+John            Smith           731 Fondren, Houston, TX                                                                                              
+Franklin        Wong            638 Voss, Houston, TX                                                                                                 
+Ramesh          Narayan         975 Fire Oak, Humble, TX                                                                                              
+Joyce           English         5631 Rice, Houston, TX                                                                                                
+
+SQL> --Q9
+SQL> --Select all employee Ssns
+SQL> SELECT Ssn
+  2  FROM EMPLOYEE;
+
+SSN                                                                                                                                                   
+---------                                                                                                                                             
+123456789                                                                                                                                             
+333445555                                                                                                                                             
+453453453                                                                                                                                             
+666884444                                                                                                                                             
+888665555                                                                                                                                             
+987654321                                                                                                                                             
+987987987                                                                                                                                             
+999887777                                                                                                                                             
+
+8 rows selected.
+
+SQL> --Q10
+SQL> --Select all combinations of eployee Ssn and Department Dname in the database
+SQL> SELECT Ssn
+  2  FROM EMPLOYEE;
+
+SSN                                                                                                                                                   
+---------                                                                                                                                             
+123456789                                                                                                                                             
+333445555                                                                                                                                             
+453453453                                                                                                                                             
+666884444                                                                                                                                             
+888665555                                                                                                                                             
+987654321                                                                                                                                             
+987987987                                                                                                                                             
+999887777                                                                                                                                             
+
+8 rows selected.
+
+SQL> SELECT Ssn, Dname
+  2  FROM EMPLOYEE, DEPARTMENT;
+
+SSN       DNAME                                                                                                                                       
+--------- ---------------                                                                                                                             
+123456789 Administration                                                                                                                              
+333445555 Administration                                                                                                                              
+453453453 Administration                                                                                                                              
+666884444 Administration                                                                                                                              
+888665555 Administration                                                                                                                              
+987654321 Administration                                                                                                                              
+987987987 Administration                                                                                                                              
+999887777 Administration                                                                                                                              
+123456789 Headquarters                                                                                                                                
+333445555 Headquarters                                                                                                                                
+453453453 Headquarters                                                                                                                                
+666884444 Headquarters                                                                                                                                
+888665555 Headquarters                                                                                                                                
+987654321 Headquarters                                                                                                                                
+987987987 Headquarters                                                                                                                                
+999887777 Headquarters                                                                                                                                
+123456789 Research                                                                                                                                    
+333445555 Research                                                                                                                                    
+453453453 Research                                                                                                                                    
+666884444 Research                                                                                                                                    
+888665555 Research                                                                                                                                    
+987654321 Research                                                                                                                                    
+987987987 Research                                                                                                                                    
+999887777 Research                                                                                                                                    
+
+24 rows selected.
+
+SQL> --Q1C
+SQL> --Retrieve all the attribute balues of any employee who works in department number 5
+SQL> SELECT *
+  2  FROM EMPLOYEE
+  3  WHERE Dno = 5;
+
+FNAME           M LNAME           SSN       BDATE     ADDRESS                        S     SALARY SUPER_SSN        DNO                                
+--------------- - --------------- --------- --------- ------------------------------ - ---------- --------- ----------                                
+John            B Smith           123456789 09-JAN-65 731 Fondren, Houston, TX       M      30000 333445555          5                                
+Franklin        T Wong            333445555 08-DEC-55 638 Voss, Houston, TX          M      40000 888665555          5                                
+Ramesh          K Narayan         666884444 15-SEP-62 975 Fire Oak, Humble, TX       M      38000 333445555          5                                
+Joyce           A English         453453453 31-JUL-72 5631 Rice, Houston, TX         F      25000 333445555          5                                
+
+SQL> --Q1D
+SQL> --Retrieve all attributes of an employee and the attributes of the department in which they work for every employee of the 'research' department
+SQL> SELECT *
+  2  FROM EMPLOYEE, DEPARTMENT
+  3  WHERE Dname = 'Research' AND Dno = Dnumber;
+
+FNAME           M LNAME           SSN       BDATE     ADDRESS                        S     SALARY SUPER_SSN        DNO DNAME              DNUMBER     
+--------------- - --------------- --------- --------- ------------------------------ - ---------- --------- ---------- --------------- ----------     
+MGR_SSN   MGR_START                                                                                                                                   
+--------- ---------                                                                                                                                   
+John            B Smith           123456789 09-JAN-65 731 Fondren, Houston, TX       M      30000 333445555          5 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+Franklin        T Wong            333445555 08-DEC-55 638 Voss, Houston, TX          M      40000 888665555          5 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+Ramesh          K Narayan         666884444 15-SEP-62 975 Fire Oak, Humble, TX       M      38000 333445555          5 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+Joyce           A English         453453453 31-JUL-72 5631 Rice, Houston, TX         F      25000 333445555          5 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+
+SQL> --Q10A
+SQL> --specifies the cross product of the employee and department relations
+SQL> SELECT *
+  2  FROM EMPLOYEE, DEPARTMENT;
+
+FNAME           M LNAME           SSN       BDATE     ADDRESS                        S     SALARY SUPER_SSN        DNO DNAME              DNUMBER     
+--------------- - --------------- --------- --------- ------------------------------ - ---------- --------- ---------- --------------- ----------     
+MGR_SSN   MGR_START                                                                                                                                   
+--------- ---------                                                                                                                                   
+John            B Smith           123456789 09-JAN-65 731 Fondren, Houston, TX       M      30000 333445555          5 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+Franklin        T Wong            333445555 08-DEC-55 638 Voss, Houston, TX          M      40000 888665555          5 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+Alicia          J Zelaya          999887777 19-JAN-68 3321 Castle, Spring, TX        F      25000 987654321          4 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+Jennifer        S Wallace         987654321 20-JUN-41 291 Berry, Bellaire, TX        F      43000 888665555          4 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+Ramesh          K Narayan         666884444 15-SEP-62 975 Fire Oak, Humble, TX       M      38000 333445555          5 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+Joyce           A English         453453453 31-JUL-72 5631 Rice, Houston, TX         F      25000 333445555          5 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+Ahmad           V Jabbar          987987987 29-MAR-69 980 Dallas, Houston, TX        M      25000 987654321          4 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+James           E Borg            888665555 10-NOV-37 450 Stone, Houston, TX         M      55000                    1 Research                 5     
+333445555 22-MAY-88                                                                                                                                   
+                                                                                                                                                      
+John            B Smith           123456789 09-JAN-65 731 Fondren, Houston, TX       M      30000 333445555          5 Administration           4     
+987654321 01-JAN-95                                                                                                                                   
+                                                                                                                                                      
+Franklin        T Wong            333445555 08-DEC-55 638 Voss, Houston, TX          M      40000 888665555          5 Administration           4     
+987654321 01-JAN-95                                                                                                                                   
+                                                                                                                                                      
+Alicia          J Zelaya          999887777 19-JAN-68 3321 Castle, Spring, TX        F      25000 987654321          4 Administration           4     
+987654321 01-JAN-95                                                                                                                                   
+                                                                                                                                                      
+Jennifer        S Wallace         987654321 20-JUN-41 291 Berry, Bellaire, TX        F      43000 888665555          4 Administration           4     
+987654321 01-JAN-95                                                                                                                                   
+                                                                                                                                                      
+Ramesh          K Narayan         666884444 15-SEP-62 975 Fire Oak, Humble, TX       M      38000 333445555          5 Administration           4     
+987654321 01-JAN-95                                                                                                                                   
+                                                                                                                                                      
+Joyce           A English         453453453 31-JUL-72 5631 Rice, Houston, TX         F      25000 333445555          5 Administration           4     
+987654321 01-JAN-95                                                                                                                                   
+                                                                                                                                                      
+Ahmad           V Jabbar          987987987 29-MAR-69 980 Dallas, Houston, TX        M      25000 987654321          4 Administration           4     
+987654321 01-JAN-95                                                                                                                                   
+                                                                                                                                                      
+James           E Borg            888665555 10-NOV-37 450 Stone, Houston, TX         M      55000                    1 Administration           4     
+987654321 01-JAN-95                                                                                                                                   
+                                                                                                                                                      
+John            B Smith           123456789 09-JAN-65 731 Fondren, Houston, TX       M      30000 333445555          5 Headquarters             1     
+888665555 19-JUN-81                                                                                                                                   
+                                                                                                                                                      
+Franklin        T Wong            333445555 08-DEC-55 638 Voss, Houston, TX          M      40000 888665555          5 Headquarters             1     
+888665555 19-JUN-81                                                                                                                                   
+                                                                                                                                                      
+Alicia          J Zelaya          999887777 19-JAN-68 3321 Castle, Spring, TX        F      25000 987654321          4 Headquarters             1     
+888665555 19-JUN-81                                                                                                                                   
+                                                                                                                                                      
+Jennifer        S Wallace         987654321 20-JUN-41 291 Berry, Bellaire, TX        F      43000 888665555          4 Headquarters             1     
+888665555 19-JUN-81                                                                                                                                   
+                                                                                                                                                      
+Ramesh          K Narayan         666884444 15-SEP-62 975 Fire Oak, Humble, TX       M      38000 333445555          5 Headquarters             1     
+888665555 19-JUN-81                                                                                                                                   
+                                                                                                                                                      
+Joyce           A English         453453453 31-JUL-72 5631 Rice, Houston, TX         F      25000 333445555          5 Headquarters             1     
+888665555 19-JUN-81                                                                                                                                   
+                                                                                                                                                      
+Ahmad           V Jabbar          987987987 29-MAR-69 980 Dallas, Houston, TX        M      25000 987654321          4 Headquarters             1     
+888665555 19-JUN-81                                                                                                                                   
+                                                                                                                                                      
+James           E Borg            888665555 10-NOV-37 450 Stone, Houston, TX         M      55000                    1 Headquarters             1     
+888665555 19-JUN-81                                                                                                                                   
+                                                                                                                                                      
+
+24 rows selected.
+
+SQL> --Q11
+SQL> --Retrieve the salary of every employee
+SQL> SELECT ALL Salary
+  2  FROM EMPLOYEE;
+
+    SALARY                                                                                                                                            
+----------                                                                                                                                            
+     30000                                                                                                                                            
+     40000                                                                                                                                            
+     25000                                                                                                                                            
+     43000                                                                                                                                            
+     38000                                                                                                                                            
+     25000                                                                                                                                            
+     25000                                                                                                                                            
+     55000                                                                                                                                            
+
+8 rows selected.
+
+SQL> --Q11A
+SQL> --Retrieve distinct salaries of employees
+SQL> SELECT DISTINCT Salary
+  2  FROM EMPLOYEE;
+
+    SALARY                                                                                                                                            
+----------                                                                                                                                            
+     55000                                                                                                                                            
+     38000                                                                                                                                            
+     30000                                                                                                                                            
+     40000                                                                                                                                            
+     43000                                                                                                                                            
+     25000                                                                                                                                            
+
+6 rows selected.
+
+SQL> --Q4A
+SQL> --Make a list of all project numbers for projects that involve an employee whose last name is 'Smith' either as a worker or manager
+SQL> (SELECT DISTINCT Pnumber
+  2  FROM PROJECT, DEPARTMENT, EMPLOYEE
+  3  WHERE Dnum = Dnumber AND Mgr_ssn = Ssn
+  4  AND Lname = 'Smith')
+  5  UNION
+  6  (SELECT DISTINCT Pnumber
+  7  FROM PROJECT, WORKS_ON, EMPLOYEE
+  8  WHERE Pnumber = Pno AND Essn = Ssn
+  9  AND Lname = 'Smith');
+
+   PNUMBER                                                                                                                                            
+----------                                                                                                                                            
+         1                                                                                                                                            
+         2                                                                                                                                            
+
+SQL> --Q12
+SQL> --Retrieve all employees whose address is in Houston Texas
+SQL> SELECT Fname, Lname
+  2  FROM EMPLOYEE
+  3  WHERE Address LIKE '%Houston, TX%';
+
+FNAME           LNAME                                                                                                                                 
+--------------- ---------------                                                                                                                       
+John            Smith                                                                                                                                 
+Franklin        Wong                                                                                                                                  
+Joyce           English                                                                                                                               
+Ahmad           Jabbar                                                                                                                                
+James           Borg                                                                                                                                  
+
+SQL> --Q12A
+SQL> --Omit due to bdate
+SQL> --Q13
+SQL> --show the resulting salaries if every employee working on the Productx project is given a 10% raise
+SQL> SELECT E.Fname, E.Lname, 1.1 * E.Salary Increased_sal
+  2  FROM EMPLOYEE E, WORKS_ON W, PROJECT P
+  3  WHERE E.Ssn = W.Essn AND W.Pno = P.Pnumber AND
+  4  P.Pname = 'ProductX';
+
+FNAME           LNAME           INCREASED_SAL                                                                                                         
+--------------- --------------- -------------                                                                                                         
+John            Smith                   33000                                                                                                         
+Joyce           English                 27500                                                                                                         
+
+SQL> --Q14
+SQL> --Retrieve all employees in department 5 whose salary is between $30,000 and $40,000
+SQL> SELECT *
+  2  FROM EMPLOYEE
+  3  WHERE (Salary BETWEEN 30000 AND 40000) AND Dno = 5;
+
+FNAME           M LNAME           SSN       BDATE     ADDRESS                        S     SALARY SUPER_SSN        DNO                                
+--------------- - --------------- --------- --------- ------------------------------ - ---------- --------- ----------                                
+John            B Smith           123456789 09-JAN-65 731 Fondren, Houston, TX       M      30000 333445555          5                                
+Franklin        T Wong            333445555 08-DEC-55 638 Voss, Houston, TX          M      40000 888665555          5                                
+Ramesh          K Narayan         666884444 15-SEP-62 975 Fire Oak, Humble, TX       M      38000 333445555          5                                
+
+SQL> --Q15
+SQL> --Retrieve a list of employees and the projects they are working on, ordered by department and, within each department, ordered alphabetically by last name, then first name
+SQL> SELECT D.Dname, E.Lname, E.Fname, P.Pname
+  2  FROM DEPARTMENT D, EMPLOYEE E, WORKS_ON W,
+  3  PROJECT P
+  4  WHERE D.Dnumber = E.Dno AND E.Ssn = W.Essn AND W.Pno = P.Pnumber
+  5  ORDER BY D.Dname, E.Lname, E.Fname;
+
+DNAME           LNAME           FNAME           PNAME                                                                                                 
+--------------- --------------- --------------- ---------------                                                                                       
+Administration  Jabbar          Ahmad           Computerization                                                                                       
+Administration  Jabbar          Ahmad           Newbenefits                                                                                           
+Administration  Wallace         Jennifer        Newbenefits                                                                                           
+Administration  Wallace         Jennifer        Reorganization                                                                                        
+Administration  Zelaya          Alicia          Newbenefits                                                                                           
+Administration  Zelaya          Alicia          Computerization                                                                                       
+Research        English         Joyce           ProductY                                                                                              
+Research        English         Joyce           ProductX                                                                                              
+Research        Narayan         Ramesh          ProductZ                                                                                              
+Research        Smith           John            ProductY                                                                                              
+Research        Smith           John            ProductX                                                                                              
+Research        Wong            Franklin        ProductZ                                                                                              
+Research        Wong            Franklin        Reorganization                                                                                        
+Research        Wong            Franklin        ProductY                                                                                              
+Research        Wong            Franklin        Computerization                                                                                       
+
+15 rows selected.
+
+SQL> --U1
+SQL> --add new tuple to the employee relation
+SQL> INSERT INTO EMPLOYEE
+  2  VALUES ('Richard', 'K', 'Marini', '653298653', '30DEC62', '98 Oak Forest, Katy, TX', 'M', 37000, '653298653', 4);
+
+1 row created.
+
+SQL> --U1A
+SQL> --enter a tuplue for a new employee for whom we know only the fname, lname, dno, and ssn attributes
+SQL> INSERT INTO EMPLOYEE (Fname, Lname, Dno, Ssn)
+  2  VALUES ('Richard', 'Marini', 4, '653298653');
+INSERT INTO EMPLOYEE (Fname, Lname, Dno, Ssn)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (JACKS19J.SYS_C0032395) violated 
+
+--Query from textbook failed
+
+SQL> --U2
+SQL> --Will be rejected because no SSn value is provided
+SQL> INSERT INTO EMPLOYEE (Fname, Lname, Ssn, Dno)
+  2  VALUES ('Robert', 'Hatcher', 5);
+VALUES ('Robert', 'Hatcher', 5)
+*
+ERROR at line 2:
+ORA-00947: not enough values 
+
+
+SQL> --U2A
+SQL> -- Will be rejected due to not null
+SQL> INSERT INTO EMPLOYEE (Fname, Lname, Dno)
+  2  VALUES ('Robert', 'Hatcher', 5);
+INSERT INTO EMPLOYEE (Fname, Lname, Dno)
+*
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("JACKS19J"."EMPLOYEE"."SSN") 
+
+
+SQL> --U3A
+SQL> --Create a table that has the employee last name, project name, and hours per week for each employee working on a project
+SQL> CREATE TABLE WORKS_ON_INFO
+  2  (Emp_name VARCHAR(15),
+  3  Proj_name VARCHAR(15),
+  4  Hours_per_week DECIMAL(3,1) );
+
+Table created.
+
+SQL> --U3B
+SQL> --Load works_on_info table with the joined information retrieved from the database
+SQL> INSERT INTO WORKS_ON_INFO (Emp_name, Proj_name, Hours_per_week)
+  2  SELECT E.Lname, P.Pname, W.Hours
+  3  FROM PROJECT P, WORKS_ON W, EMPLOYEE E
+  4  WHERE P.Pnumber = W.Pno AND W.Essn = E.Ssn;
+
+15 rows created.
+
+SQL> --U4A
+SQL> --Remove tuples from Brown
+SQL> DELETE FROM EMPLOYEE
+  2  WHERE Lname = 'Brown';
+
+0 rows deleted.
+
+SQL> --U4B
+SQL> --Remove tuples from specified ssn
+SQL> DELETE FROM EMPLOYEE
+  2  WHERE Ssn = '123456789';
+
+1 row deleted.
+
+SQL> --U4C
+SQL> --Remove tuples from specified Dno
+SQL> DELETE FROM EMPLOYEE
+  2  WHERE Dno = 5;
+
+3 rows deleted.
+
+SQL> --U4D
+SQL> --Remove tuples from employee
+SQL> DELETE FROM EMPLOYEE;
+
+5 rows deleted.
+
+SQL> --U5
+SQL> --change the location and controlling department number of project number 10 to Bellaire and 5 repectively
+SQL> UPDATE PROJECT
+  2  SET Plocation = 'Bellaire', Dnum = 5
+  3  WHERE Pnumber = 10;
+
+1 row updated.
+
+SQL> --U6
+SQL> --Give all employees in the 'research' department a 10% raise
+SQL> UPDATE EMPLOYEE
+  2  SET Salary = Salary * 1.1
+  3  WHERE Dno = 5;
+
+0 rows updated.
+
+SQL> spool off;
